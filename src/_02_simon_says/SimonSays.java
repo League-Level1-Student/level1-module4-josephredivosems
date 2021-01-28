@@ -28,7 +28,7 @@ public class SimonSays extends KeyAdapter implements ActionListener {
 	HashMap<Integer, String> images = new HashMap<Integer, String>();
 	private int imageIndex;
 	private int tries = 0;
-	private boolean simonSays = true;
+	private boolean simonSays;
 	Date timeAtStart;
 
 	// Complete steps 1 - 7 before you test
@@ -53,22 +53,22 @@ public class SimonSays extends KeyAdapter implements ActionListener {
 		// 15. Make a points variable to track the score.
 		int points = 0;
 		// 16. If the keyCode matches the imageIndex and "Simon says"
-		if(imageIndex == e.getKeyCode() && simonSays) {
+		if((imageIndex == e.getKeyCode()) && simonSays) {
 		// 17. Increase the value of score
 			points++;
 		
 		// 18. Use the speak method to tell the user they were correct
-		speak("You got it correct");
+		System.out.println("You got it correct");
 		}
 		// 19. If the keyCode doesn't match the imageIndex and "Simon didn't
 		// say..."
-		else if(e.getKeyCode() != imageIndex && simonSays){
+		else if((e.getKeyCode() != imageIndex) && !simonSays){
 			
 		// 20. Increase the value of score
 			points++;
 		
 		// 21. Use the speak method to tell the user they were correct
-			speak("You are correct");
+			System.out.println("You are correct");
 		// 22. Increment tries by 1
 			tries++;
 		}
@@ -78,10 +78,11 @@ public class SimonSays extends KeyAdapter implements ActionListener {
 			
 		// 26. Tell the user their score
 				JOptionPane.showMessageDialog(null,"Your score is " + points );
-			
+				System.exit(0);
+				
 			}
 		// 27. Exit the program
-			System.exit(0);
+			
 		// 23. Dispose of the frame
 			frame.dispose();
 		// 24. Call the showImage method to show a new image
@@ -103,27 +104,22 @@ public class SimonSays extends KeyAdapter implements ActionListener {
 		// 10. Set the defaultCloseOperation of your frame to
 		// JFrame.EXIT_ON_CLOSE
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.pack();
+		
 		// 11. Add a key listener to the frame
-		JButton button = new JButton();
-		button.addActionListener(this);
+		
+		frame.addKeyListener(this);
 		// 12. Create a new instance of Random
 		Random ran = new Random();
-		int rand = ran.nextInt(4);
+		int rand = ran.nextInt(2);
 		// 13. Use the Random and the speak method to either say
 		// "Simon says press this key" or "Press this key"
 		if(rand == 0) {
-			JOptionPane.showMessageDialog(null, "Simon says press up arrow.");
+			System.out.println("Simon says press this key");
+			simonSays = true;
 		}
 		else if(rand == 1) {
-			JOptionPane.showMessageDialog(null, "Simon says press down arrow.");
-		}
-		else if(rand == 2) {
-			JOptionPane.showMessageDialog(null, "Simon says press left arrow");
-			
-		}
-		else if(rand == 3) {
-			JOptionPane.showMessageDialog(null, "Simon say press right arrow.");
+			System.out.println("Press this key");
+			simonSays = false;
 		}
 		// 14. Above, set the value of simonSays to true/false appropriately
 		
