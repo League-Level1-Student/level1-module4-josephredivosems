@@ -10,10 +10,13 @@ import javax.swing.JPanel;
 
 public class TypingTutor implements KeyListener {
 	char currentLetter;
-	private JLabel label;
+	private JLabel label = new JLabel();
+	private JPanel panel = new JPanel();
+	private JFrame frame = new JFrame();
 		void setup(){
-         JFrame frame = new JFrame();
-         JPanel panel = new JPanel();
+        
+         frame.setVisible(true);
+ 
          currentLetter = generateRandomLetter();
          label.setText("" + currentLetter);
          label.setFont(label.getFont().deriveFont(28.0f));
@@ -30,14 +33,21 @@ public class TypingTutor implements KeyListener {
 		@Override
 		public void keyPressed(KeyEvent arg0) {
 			// TODO Auto-generated method stub
-			if(arg0.equals(currentLetter)) {
-				currentLetter = null;
-			}
+		
+		char pressed = arg0.getKeyChar();
+		if(pressed == currentLetter) {
+			System.out.println("Correct!");
+			panel.setBackground(GREEN);
+		}
+		else {
+			panel.setBackground(RED);
+		}
 		}
 		@Override
 		public void keyReleased(KeyEvent arg0) {
 			// TODO Auto-generated method stub
-			
+			currentLetter = generateRandomLetter();
+			label.setText("" + currentLetter);
 		}
 		@Override
 		public void keyTyped(KeyEvent arg0) {
