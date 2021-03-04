@@ -11,9 +11,13 @@ import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JApplet;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -53,13 +57,41 @@ public class FortuneTeller extends JPanel implements Runnable, MouseListener {
    		 // 8. Get the user to enter a question for the fortune teller
    		 JOptionPane.showInputDialog("Ask the fortune teller a question....");
    		 // 9. Find a spooky sound and put it in your _07_fortune_teller package (freesound.org)
-   		  AudioClip sound = JApplet.newAudioClip(getClass().getResource("creepy-noise.wav"));
+   		
    		 // 10. Play the sound
-   		 play(sound);
+   		play("src/_07_fortune_teller/creepy-noise.wav");
+   		System.out.println("played");
    		 // 11. Use the pause() method below to wait until your music has finished
-
+   		  pause(10);
    		 // 12. Insert your completed Magic 8 ball code here
+   		Random ran = new Random();
+		int rand = ran.nextInt(4);
+	// 3. Print out this variable
+		System.out.println(rand);
+	// 4. Get the user to enter a question for the 8 ball
+		JOptionPane.showInputDialog("Ask a question for the 8 ball.");
+	// 5. If the random number is 0
+		if(rand == 0) {
+			JOptionPane.showMessageDialog(null , "Yes");
+		}
+	// -- tell the user "Yes"
 
+	// 6. If the random number is 1
+		if(rand == 1) {
+			JOptionPane.showMessageDialog(null, "No");
+		}
+	// -- tell the user "No"
+
+	// 7. If the random number is 2
+		if(rand == 2) {
+			JOptionPane.showMessageDialog(null, "Maybe you should ask Google?");
+		}
+	// -- tell the user "Maybe you should ask Google?"
+
+	// 8. If the random number is 3
+		if(rand == 3) {
+			JOptionPane.showMessageDialog(null, "Ask a new question.");
+		}
    	 }
 
     }
@@ -79,6 +111,22 @@ public class FortuneTeller extends JPanel implements Runnable, MouseListener {
     /**************** don't worry about the stuff under here *******************/
     
     BufferedImage fortuneTellerImage;
+    public static synchronized void play(final String fileName)
+    {
+        // Note: use .wav files            
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Clip clip = AudioSystem.getClip();
+                    AudioInputStream inputStream = AudioSystem.getAudioInputStream(new File(fileName));
+                    clip.open(inputStream);
+                    clip.start();
+                } catch (Exception e) {
+                    System.out.println("play sound error: " + e.getMessage() + " for " + fileName);
+                }
+            }
+        }).start();
+    }
 
 
 
