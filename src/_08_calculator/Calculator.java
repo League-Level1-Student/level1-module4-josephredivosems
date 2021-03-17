@@ -55,14 +55,17 @@ public void add(int first,int second) {
 public void subtract(int first,int second) {
 	int difference = first-=second;
 	label.setText("" + difference);
+	frame.pack();
 }
 public void multiply(int first,int second) {
 	int product = first*second;
 	label.setText("" + product);
+	frame.pack();
 }
 public void divide(int first, int second) {
 	int quotient = first/second;
 	label.setText("" + quotient);
+	frame.pack();
 }
 @Override
 public void actionPerformed(ActionEvent arg0) {
